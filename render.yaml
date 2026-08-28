@@ -13,10 +13,10 @@ services:
       - path: /*
         name: Cache-Control
         value: public, max-age=0, must-revalidate
-    redirects:
-      - source: /*
+    routes:
+      - type: rewrite
+        source: /*
         destination: /index.html
-        type: rewrite
     envVars:
       - key: NODE_VERSION
         value: 20.11.0
