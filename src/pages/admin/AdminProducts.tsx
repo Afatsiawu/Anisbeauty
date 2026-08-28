@@ -144,7 +144,7 @@ export default function AdminProducts() {
                       {product.category}
                     </td>
                     <td className="px-6 py-4 font-display text-sm font-semibold text-charcoal-700">
-                      ${product.price}
+                      ₵{product.price}
                     </td>
                     <td className="px-6 py-4">
                       <button
@@ -205,7 +205,7 @@ export default function AdminProducts() {
                       {product.category}
                     </p>
                     <p className="mt-1 font-display text-sm font-bold text-charcoal-700">
-                      ${product.price}
+                      ₵{product.price}
                     </p>
                   </div>
                   <div className="flex flex-col gap-2">

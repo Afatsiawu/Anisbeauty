@@ -260,7 +260,7 @@ export default function ProductForm() {
             </div>
             <div>
               <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                Price ($) *
+                Price (₵) *
               </label>
               <input
                 type="number"
@@ -273,7 +273,7 @@ export default function ProductForm() {
             </div>
             <div>
               <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                Old Price ($)
+                Old Price (₵)
               </label>
               <input
                 type="number"

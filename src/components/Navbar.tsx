@@ -68,7 +68,7 @@ export default function Navbar() {
         <div className="container-luxe flex items-center justify-center gap-2 px-4 py-2.5 text-center">
           <Sparkles className="h-3.5 w-3.5 text-gold-400 flex-shrink-0" />
           <p className="font-button text-[11px] uppercase tracking-widest sm:text-xs">
-            Free Shipping on Orders Above $75
+            Free Shipping on Orders Above ₵75
           </p>
         </div>
       </div>
@@ -295,7 +295,7 @@ export default function Navbar() {
                             </p>
                           </div>
                           <span className="font-display text-sm font-semibold text-charcoal-700">
-                            ${product.price}
+                            ₵{product.price}
                           </span>
                         </button>
                       ))}

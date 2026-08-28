@@ -6,7 +6,7 @@ const reasons = [
   { icon: Stethoscope, title: 'Dermatologist Tested', desc: 'Every formula is rigorously tested and approved by skincare experts.' },
   { icon: Rabbit, title: 'Cruelty-Free', desc: 'We never test on animals. All products are certified cruelty-free.' },
   { icon: FlaskConical, title: 'Paraben-Free', desc: 'Free from parabens, sulfates, and harmful chemicals for safe beauty.' },
-  { icon: Truck, title: 'Fast Shipping', desc: 'Free express shipping on all orders above $75, worldwide delivery.' },
+  { icon: Truck, title: 'Fast Shipping', desc: 'Free express shipping on all orders above ₵75, worldwide delivery.' },
   { icon: Recycle, title: 'Sustainable Packaging', desc: 'Recyclable and eco-friendly packaging because luxury should be responsible.' },
 ];
 

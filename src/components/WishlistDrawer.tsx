@@ -81,7 +81,7 @@ export default function WishlistDrawer() {
                           {product.category}
                         </p>
                         <p className="mt-1 font-display text-base font-semibold text-charcoal-700">
-                          ${product.price}
+                          ₵{product.price}
                         </p>
                         <div className="mt-auto flex items-center gap-2">
                           <button

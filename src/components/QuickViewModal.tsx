@@ -118,11 +118,11 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
 
                   <div className="mt-4 flex items-center gap-3">
                     <span className="font-display text-3xl font-bold text-charcoal-700">
-                      ${product.price}
+                          ₵{product.price}
                     </span>
                     {product.old_price && (
                       <span className="font-body text-lg text-charcoal-300 line-through">
-                        ${product.old_price}
+                        ₵{product.old_price}
                       </span>
                     )}
                     {product.badge && (
@@ -177,7 +177,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     onClick={handleAdd}
                     className="btn-primary mt-6 flex w-full items-center justify-center gap-2"
                   >
-                    <ShoppingBag className="h-5 w-5" /> Add to Cart — ${(product.price * quantity).toFixed(2)}
+                      <ShoppingBag className="h-5 w-5" /> Add to Cart — ₵{(product.price * quantity).toFixed(2)}
                   </button>
                 </div>
               </div>

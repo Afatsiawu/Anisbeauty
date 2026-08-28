@@ -3,7 +3,7 @@ import { Rabbit, Truck, ShieldCheck, RefreshCw, Gem, Sparkles } from 'lucide-rea
 
 const features = [
   { icon: Rabbit, title: 'Cruelty Free', desc: 'Never tested on animals' },
-  { icon: Truck, title: 'Fast Delivery', desc: 'Free shipping over $75' },
+  { icon: Truck, title: 'Fast Delivery', desc: 'Free shipping over ₵75' },
   { icon: ShieldCheck, title: 'Secure Payment', desc: 'Encrypted checkout' },
   { icon: RefreshCw, title: 'Easy Returns', desc: '30-day return policy' },
   { icon: Gem, title: 'Premium Quality', desc: 'Luxury ingredients' },

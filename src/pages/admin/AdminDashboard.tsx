@@ -42,7 +42,7 @@ export default function AdminDashboard() {
   const pendingCount = orders.filter((o) => o.status === 'pending').length;
 
   const stats = [
-    { label: 'Revenue', value: `$${revenue.toFixed(2)}`, icon: DollarSign, color: 'bg-rosegold-100 text-rosegold-500' },
+    { label: 'Revenue', value: `₵${revenue.toFixed(2)}`, icon: DollarSign, color: 'bg-rosegold-100 text-rosegold-500' },
     { label: 'Total Orders', value: orders.length, icon: ShoppingBag, color: 'bg-blush-100 text-blush-600' },
     { label: 'Products', value: productCount, icon: Package, color: 'bg-gold-100 text-gold-600' },
     { label: 'Pending Orders', value: pendingCount, icon: Clock, color: 'bg-purple-100 text-purple-600' },
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                     {order.status}
                   </span>
                   <span className="font-display text-sm font-bold text-charcoal-700">
-                    ${Number(order.total).toFixed(2)}
+                    ₵{Number(order.total).toFixed(2)}
                   </span>
                 </div>
               </div>

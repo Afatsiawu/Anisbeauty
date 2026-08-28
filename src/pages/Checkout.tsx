@@ -398,11 +398,11 @@ export default function Checkout() {
                           {item.product.category}
                         </p>
                         <p className="font-body text-xs text-charcoal-400">
-                          Qty: {item.quantity} × ${item.product.price}
+                          Qty: {item.quantity} × ₵{item.product.price}
                         </p>
                       </div>
                       <p className="font-body text-sm font-semibold text-charcoal-700">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        ₵{(item.product.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -411,17 +411,17 @@ export default function Checkout() {
                 <div className="mt-6 space-y-2 border-t border-blush-100 pt-4">
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>₵{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span className="flex items-center gap-1">
                       <Truck className="h-3.5 w-3.5" /> Shipping
                     </span>
-                    <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                    <span>{shipping === 0 ? 'Free' : `₵${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between border-t border-blush-100 pt-2 font-display text-lg font-bold text-charcoal-700">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>₵{total.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -437,7 +437,7 @@ export default function Checkout() {
                     </>
                   ) : (
                     <>
-                      <Lock className="h-4 w-4" /> Place Order — ${total.toFixed(2)}
+                      <Lock className="h-4 w-4" /> Place Order — ₵{total.toFixed(2)}
                     </>
                   )}
                 </button>

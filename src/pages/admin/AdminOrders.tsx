@@ -150,7 +150,7 @@ export default function AdminOrders() {
                       {new Date(order.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 font-display text-sm font-bold text-charcoal-700">
-                      ${Number(order.total).toFixed(2)}
+                      ₵{Number(order.total).toFixed(2)}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`rounded-full px-3 py-1 font-button text-[10px] uppercase tracking-wider ${STATUS_COLORS[order.status]}`}>
@@ -183,7 +183,7 @@ export default function AdminOrders() {
                 </div>
                 <p className="mt-1 font-body text-xs text-charcoal-500">{order.customer_name}</p>
                 <p className="font-body text-xs text-charcoal-400">
-                  {new Date(order.created_at).toLocaleDateString()} · ${Number(order.total).toFixed(2)}
+                  {new Date(order.created_at).toLocaleDateString()} · ₵{Number(order.total).toFixed(2)}
                 </p>
               </motion.div>
             ))}
@@ -305,11 +305,11 @@ export default function AdminOrders() {
                             {item.category}
                           </p>
                           <p className="font-body text-xs text-charcoal-400">
-                            Qty: {item.quantity} × ${item.price}
+                            Qty: {item.quantity} × ₵{item.price}
                           </p>
                         </div>
                         <p className="font-body text-sm font-semibold text-charcoal-700">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ₵{(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     ))}
@@ -320,17 +320,17 @@ export default function AdminOrders() {
                 <div className="mt-6 space-y-2 border-t border-blush-100 pt-4">
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Subtotal</span>
-                    <span>${Number(selectedOrder.subtotal).toFixed(2)}</span>
+                    <span>₵{Number(selectedOrder.subtotal).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Shipping</span>
                     <span>
-                      {Number(selectedOrder.shipping) === 0 ? 'Free' : `$${Number(selectedOrder.shipping).toFixed(2)}`}
+                      {Number(selectedOrder.shipping) === 0 ? 'Free' : `₵${Number(selectedOrder.shipping).toFixed(2)}`}
                     </span>
                   </div>
                   <div className="flex justify-between border-t border-blush-100 pt-2 font-display text-lg font-bold text-charcoal-700">
                     <span>Total</span>
-                    <span>${Number(selectedOrder.total).toFixed(2)}</span>
+                    <span>₵{Number(selectedOrder.total).toFixed(2)}</span>
                   </div>
                 </div>
               </div>

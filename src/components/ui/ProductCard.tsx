@@ -130,11 +130,11 @@ export default function ProductCard({ product, onQuickView }: ProductCardProps) 
         </div>
         <div className="mt-3 flex items-center gap-2">
           <span className="font-display text-lg font-semibold text-charcoal-700">
-            ${product.price}
+            ₵{product.price}
           </span>
           {product.old_price && (
             <span className="font-body text-sm text-charcoal-300 line-through">
-              ${product.old_price}
+              ₵{product.old_price}
             </span>
           )}
         </div>

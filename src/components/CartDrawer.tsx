@@ -80,7 +80,7 @@ export default function CartDrawer() {
                           {item.product.category}
                         </p>
                         <p className="mt-1 font-display text-base font-semibold text-charcoal-700">
-                          ${item.product.price}
+                          ₵{item.product.price}
                         </p>
                         <div className="mt-auto flex items-center justify-between">
                           <div className="flex items-center gap-2 rounded-full border border-blush-200 px-2 py-1">
@@ -123,20 +123,20 @@ export default function CartDrawer() {
                 <div className="space-y-2">
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>₵{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Shipping</span>
-                    <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                    <span>{shipping === 0 ? 'Free' : `₵${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between border-t border-blush-100 pt-2 font-display text-lg font-bold text-charcoal-700">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>₵{total.toFixed(2)}</span>
                   </div>
                 </div>
                 {subtotal < 75 && (
                   <p className="mt-3 rounded-luxe bg-blush-50 px-4 py-2 text-center font-body text-xs text-rosegold-500">
-                    Add ${(75 - subtotal).toFixed(2)} more for free shipping!
+                    Add ₵{(75 - subtotal).toFixed(2)} more for free shipping!
                   </p>
                 )}
                 <Link
