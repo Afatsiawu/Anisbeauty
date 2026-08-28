@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FAF8F6;
+    color: #2C2C2C;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  ::selection {
+    background-color: #E8B4C8;
+    color: #2C2C2C;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FAF8F6;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #E8B4C8;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B76E79;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply font-button font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-full bg-blush-400 text-white shadow-luxe transition-all duration-300 hover:bg-rosegold-500 hover:shadow-gold hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply font-button font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-full bg-white text-rosegold-500 border-2 border-rosegold-400 transition-all duration-300 hover:bg-rosegold-50 hover:shadow-luxe hover:scale-105 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply font-button font-medium text-sm text-charcoal-600 hover:text-rosegold-500 transition-colors duration-200;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  .container-luxe {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #F4F4F4 25%, #FAE8F0 50%, #F4F4F4 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #D4AF37 0%, #B76E79 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

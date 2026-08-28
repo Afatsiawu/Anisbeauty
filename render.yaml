@@ -1,0 +1,22 @@
+# Render Configuration for ANISBEAUTY
+# Static site deployment for the Vite + React frontend
+
+services:
+  - type: web
+    name: anisbeauty
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      # SPA fallback so client-side routes (e.g. /shop, /admin/login) work on refresh
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    redirects:
+      - source: /*
+        destination: /index.html
+        type: rewrite
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0

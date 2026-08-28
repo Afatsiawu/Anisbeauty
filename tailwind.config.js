@@ -1,0 +1,101 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        blush: {
+          50: '#FDF4F8',
+          100: '#FAE8F0',
+          200: '#F5D1E0',
+          300: '#EDB5CD',
+          400: '#E8B4C8',
+          500: '#D98BAE',
+          600: '#C28CA8',
+          700: '#A85C82',
+          800: '#8E4267',
+          900: '#6E2F4F',
+        },
+        nude: {
+          50: '#FDFBF9',
+          100: '#FAF8F6',
+          200: '#F7E7E1',
+          300: '#F0D5CA',
+          400: '#E6BFB0',
+          500: '#D9A894',
+        },
+        rosegold: {
+          50: '#FBF0F1',
+          100: '#F5DCDE',
+          200: '#EBB9BD',
+          300: '#D99DA3',
+          400: '#C28CA8',
+          500: '#B76E79',
+          600: '#A35A65',
+          700: '#824951',
+          800: '#613A40',
+          900: '#4A2B30',
+        },
+        gold: {
+          50: '#FBF7EA',
+          100: '#F6EBC8',
+          200: '#EDD98C',
+          300: '#E4C755',
+          400: '#D4AF37',
+          500: '#BF9B2A',
+          600: '#9C7B1F',
+          700: '#7A5E18',
+          800: '#5C4713',
+          900: '#3F310D',
+        },
+        charcoal: {
+          50: '#F6F6F6',
+          100: '#E8E8E8',
+          200: '#D1D1D1',
+          300: '#B0B0B0',
+          400: '#888888',
+          500: '#5C5C5C',
+          600: '#444444',
+          700: '#2C2C2C',
+          800: '#1F1F1F',
+          900: '#141414',
+        },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'serif'],
+        body: ['Poppins', 'sans-serif'],
+        button: ['Montserrat', 'sans-serif'],
+      },
+      boxShadow: {
+        luxe: '0 10px 40px -10px rgba(183, 110, 121, 0.18)',
+        'luxe-lg': '0 25px 60px -15px rgba(183, 110, 121, 0.25)',
+        soft: '0 4px 20px -4px rgba(44, 44, 44, 0.08)',
+        gold: '0 8px 30px -6px rgba(212, 175, 55, 0.35)',
+      },
+      borderRadius: {
+        luxe: '1.25rem',
+      },
+      backgroundImage: {
+        'blush-gradient': 'linear-gradient(135deg, #FDF4F8 0%, #F7E7E1 50%, #FAE8F0 100%)',
+        'gold-gradient': 'linear-gradient(135deg, #D4AF37 0%, #B76E79 100%)',
+        'rosegold-gradient': 'linear-gradient(135deg, #B76E79 0%, #D4AF37 100%)',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-15px)' },
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-1000px 0' },
+          '100%': { backgroundPosition: '1000px 0' },
+        },
+      },
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
+        shimmer: 'shimmer 2s linear infinite',
+      },
+    },
+  },
+  plugins: [],
+};
