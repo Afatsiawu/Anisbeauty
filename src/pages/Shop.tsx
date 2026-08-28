@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, Search } from 'lucide-react';
@@ -41,6 +41,14 @@ export default function Shop() {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   const selectedCategory = searchParams.get('category') || 'All';
+
+  useEffect(() => {
+    const sharedProductId = searchParams.get('product');
+    if (!sharedProductId || loading) return;
+
+    const sharedProduct = products.find((product) => product.id === sharedProductId);
+    if (sharedProduct) setQuickViewProduct(sharedProduct);
+  }, [loading, products, searchParams]);
 
   const filtered = useMemo(() => {
     let result = [...products];

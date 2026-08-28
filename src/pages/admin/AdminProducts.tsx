@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Search, Pencil, Trash2, Package } from 'lucide-react';
+import { Plus, Search, Pencil, Trash2, Package, Share2, Copy, MessageCircle, Facebook } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { Product } from '@/lib/types';
+import { useToast } from '@/lib/toast-context';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [shareProductId, setShareProductId] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     loadProducts();
@@ -51,6 +54,63 @@ export default function AdminProducts() {
     } catch {
       alert('Failed to update product status');
     }
+  }
+
+  function getProductUrl(product: Product) {
+    return `${window.location.origin}/shop?product=${encodeURIComponent(product.id)}`;
+  }
+
+  function shareTo(platform: 'whatsapp' | 'facebook' | 'x', product: Product) {
+    const url = getProductUrl(product);
+    const text = `Discover ${product.name} at ANISBEAUTY`;
+    const shareUrl = platform === 'whatsapp'
+      ? `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`
+      : platform === 'facebook'
+        ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+        : `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    setShareProductId(null);
+  }
+
+  async function copyProductLink(product: Product) {
+    await navigator.clipboard.writeText(getProductUrl(product));
+    showToast('Product link copied');
+    setShareProductId(null);
+  }
+
+  async function nativeShare(product: Product) {
+    if (!navigator.share) {
+      showToast('Choose a social platform or copy the link', 'info');
+      return;
+    }
+    await navigator.share({
+      title: product.name,
+      text: `Discover ${product.name} at ANISBEAUTY`,
+      url: getProductUrl(product),
+    });
+    setShareProductId(null);
+  }
+
+  function ShareMenu({ product }: { product: Product }) {
+    return (
+      <div className="absolute right-0 top-10 z-20 w-44 rounded-luxe border border-blush-100 bg-white p-1.5 shadow-luxe">
+        <button onClick={() => nativeShare(product)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left font-body text-xs text-charcoal-600 hover:bg-nude-50">
+          <Share2 className="h-3.5 w-3.5" /> Share...
+        </button>
+        <button onClick={() => shareTo('whatsapp', product)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left font-body text-xs text-charcoal-600 hover:bg-nude-50">
+          <MessageCircle className="h-3.5 w-3.5 text-green-600" /> WhatsApp
+        </button>
+        <button onClick={() => shareTo('facebook', product)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left font-body text-xs text-charcoal-600 hover:bg-nude-50">
+          <Facebook className="h-3.5 w-3.5 text-blue-600" /> Facebook
+        </button>
+        <button onClick={() => shareTo('x', product)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left font-body text-xs text-charcoal-600 hover:bg-nude-50">
+          <span className="w-3.5 text-center text-xs font-semibold">X</span> X
+        </button>
+        <button onClick={() => copyProductLink(product)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left font-body text-xs text-charcoal-600 hover:bg-nude-50">
+          <Copy className="h-3.5 w-3.5" /> Copy link
+        </button>
+      </div>
+    );
   }
 
   const filtered = products.filter(
@@ -160,6 +220,16 @@ export default function AdminProducts() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-2">
+                        <div className="relative">
+                          <button
+                            onClick={() => setShareProductId(shareProductId === product.id ? null : product.id)}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-blush-50 text-rosegold-500 transition-colors hover:bg-blush-100"
+                            aria-label={`Share ${product.name}`}
+                          >
+                            <Share2 className="h-4 w-4" />
+                          </button>
+                          {shareProductId === product.id && <ShareMenu product={product} />}
+                        </div>
                         <Link
                           to={`/admin/products/${product.id}/edit`}
                           className="flex h-9 w-9 items-center justify-center rounded-full bg-blush-50 text-rosegold-500 transition-colors hover:bg-blush-100"
@@ -220,6 +290,16 @@ export default function AdminProducts() {
                   </div>
                 </div>
                 <div className="mt-3 flex gap-2">
+                  <div className="relative flex-1">
+                    <button
+                      onClick={() => setShareProductId(shareProductId === product.id ? null : product.id)}
+                      className="flex w-full items-center justify-center gap-1.5 rounded-luxe bg-blush-50 py-2 font-button text-xs uppercase tracking-wider text-rosegold-500"
+                      aria-label={`Share ${product.name}`}
+                    >
+                      <Share2 className="h-3.5 w-3.5" /> Share
+                    </button>
+                    {shareProductId === product.id && <ShareMenu product={product} />}
+                  </div>
                   <Link
                     to={`/admin/products/${product.id}/edit`}
                     className="flex flex-1 items-center justify-center gap-1.5 rounded-luxe bg-blush-50 py-2 font-button text-xs uppercase tracking-wider text-rosegold-500"
