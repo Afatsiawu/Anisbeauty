@@ -6,7 +6,7 @@ import { useCart } from '@/lib/cart-context';
 export default function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeFromCart, subtotal } = useCart();
 
-  const shipping = subtotal >= 75 || subtotal === 0 ? 0 : 8;
+  const shipping = items.length > 0 ? 8 : 0;
   const total = subtotal + shipping;
 
   return (
@@ -127,18 +127,13 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between font-body text-sm text-charcoal-500">
                     <span>Shipping</span>
-                    <span>{shipping === 0 ? 'Free' : `₵${shipping.toFixed(2)}`}</span>
+                    <span>₵{shipping.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between border-t border-blush-100 pt-2 font-display text-lg font-bold text-charcoal-700">
                     <span>Total</span>
                     <span>₵{total.toFixed(2)}</span>
                   </div>
                 </div>
-                {subtotal < 75 && (
-                  <p className="mt-3 rounded-luxe bg-blush-50 px-4 py-2 text-center font-body text-xs text-rosegold-500">
-                    Add ₵{(75 - subtotal).toFixed(2)} more for free shipping!
-                  </p>
-                )}
                 <Link
                   to="/checkout"
                   onClick={closeCart}

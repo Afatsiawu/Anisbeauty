@@ -31,7 +31,7 @@ export default function Checkout() {
     card_cvc: '',
   });
 
-  const shipping = subtotal >= 75 ? 0 : 8;
+  const shipping = 8;
   const total = subtotal + shipping;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -417,7 +417,7 @@ export default function Checkout() {
                     <span className="flex items-center gap-1">
                       <Truck className="h-3.5 w-3.5" /> Shipping
                     </span>
-                    <span>{shipping === 0 ? 'Free' : `₵${shipping.toFixed(2)}`}</span>
+                    <span>₵{shipping.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between border-t border-blush-100 pt-2 font-display text-lg font-bold text-charcoal-700">
                     <span>Total</span>

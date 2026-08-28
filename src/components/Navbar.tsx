@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Search, Heart, ShoppingBag, User, Menu, X, Sparkles } from 'lucide-react';
+import { Search, Heart, ShoppingBag, User, Menu, X } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useWishlist } from '@/lib/wishlist-context';
 import { useStoreProducts } from '@/lib/use-store-products';
@@ -63,16 +63,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Announcement bar */}
-      <div className="relative z-50 bg-charcoal-700 text-white">
-        <div className="container-luxe flex items-center justify-center gap-2 px-4 py-2.5 text-center">
-          <Sparkles className="h-3.5 w-3.5 text-gold-400 flex-shrink-0" />
-          <p className="font-button text-[11px] uppercase tracking-widest sm:text-xs">
-            Free Shipping on Orders Above ₵75
-          </p>
-        </div>
-      </div>
-
       {/* Navbar */}
       <header
         className={`sticky top-0 z-40 transition-all duration-500 ${
