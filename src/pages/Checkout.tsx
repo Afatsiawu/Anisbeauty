@@ -36,9 +36,149 @@ export default function Checkout() {
 
   const shipping = 8;
   const total = subtotal + shipping;
+  const paymentLabel =
+    form.payment_method === 'momo'
+      ? 'MoMo'
+      : form.payment_method === 'cash_on_delivery'
+        ? 'Cash on Delivery'
+        : 'Card';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleDownloadReceipt = () => {
+    if (!orderId) return;
+
+    const receiptOrderNumber =
+      typeof orderId === 'string' && orderId.startsWith('AB-') ? orderId : `AB-${orderId.slice(-8)}`;
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      showToast('Unable to download the receipt right now.');
+      return;
+    }
+
+    const width = 1200;
+    const height = 1600;
+    canvas.width = width;
+    canvas.height = height;
+
+    const pageBg = '#f9f3f2';
+    const cardBg = '#fffdfc';
+    const accent = '#c79b5d';
+    const text = '#2d221f';
+    const muted = '#6b5a54';
+    const border = '#eadfd6';
+
+    context.fillStyle = pageBg;
+    context.fillRect(0, 0, width, height);
+
+    context.fillStyle = accent;
+    context.fillRect(60, 60, width - 120, 170);
+
+    context.fillStyle = '#ffffff';
+    context.font = '700 52px sans-serif';
+    context.fillText('ANIS BEAUTY', 95, 150);
+
+    context.font = '600 24px sans-serif';
+    context.fillText('ORDER RECEIPT', 900, 150);
+
+    context.fillStyle = cardBg;
+    context.fillRect(60, 260, width - 120, 1180);
+    context.strokeStyle = border;
+    context.lineWidth = 2;
+    context.strokeRect(60, 260, width - 120, 1180);
+
+    context.fillStyle = accent;
+    context.fillRect(95, 310, 180, 6);
+
+    context.fillStyle = text;
+    context.font = '700 36px sans-serif';
+    context.fillText('Delivery Confirmation', 95, 380);
+
+    context.fillStyle = muted;
+    context.font = '600 22px sans-serif';
+    context.fillText(`Date: ${new Date().toLocaleDateString()}`, 95, 420);
+
+    context.fillStyle = accent;
+    context.font = '700 26px sans-serif';
+    context.fillText(`Order ID: ${receiptOrderNumber}`, 95, 470);
+
+    const infoStartY = 520;
+    const drawText = (label: string, value: string, x: number, y: number, valueColor = text) => {
+      context.fillStyle = muted;
+      context.font = '600 22px sans-serif';
+      context.fillText(label, x, y);
+      context.fillStyle = valueColor;
+      context.font = '700 26px sans-serif';
+      const maxWidth = x < 700 ? 420 : 260;
+      const wrapped = value.length > 38 ? `${value.slice(0, 35)}...` : value;
+      context.fillText(wrapped, x, y + 32, maxWidth);
+    };
+
+    drawText('Customer', form.customer_name || 'Not provided', 95, infoStartY);
+    drawText('Email', form.customer_email || 'Not provided', 95, infoStartY + 110);
+    drawText('Phone', form.customer_phone || 'Not provided', 95, infoStartY + 220);
+    drawText('Address', `${form.shipping_address || 'Not provided'}${form.city ? `, ${form.city}` : ''}` || 'Not provided', 95, infoStartY + 330);
+    drawText('Payment', paymentLabel, 95, infoStartY + 440);
+
+    const qrSize = 180;
+    const qrX = 890;
+    const qrY = 350;
+    context.fillStyle = '#ffffff';
+    context.fillRect(qrX, qrY, qrSize, qrSize);
+    context.strokeStyle = text;
+    context.lineWidth = 2;
+    context.strokeRect(qrX, qrY, qrSize, qrSize);
+
+    for (let i = 0; i < 8; i += 1) {
+      for (let j = 0; j < 8; j += 1) {
+        if ((i + j + (i * j)) % 3 === 0 || (i * j) % 5 === 0) {
+          context.fillStyle = text;
+          context.fillRect(qrX + 16 + i * 18, qrY + 16 + j * 18, 10, 10);
+        }
+      }
+    }
+
+    context.fillStyle = text;
+    context.font = '700 24px sans-serif';
+    context.fillText('Scan for verification', qrX - 20, qrY + qrSize + 38);
+
+    context.fillStyle = text;
+    context.font = '700 30px sans-serif';
+    context.fillText('Order Items', 95, 1030);
+
+    let itemY = 1085;
+    items.forEach((item, index) => {
+      const itemLabel = `${index + 1}. ${item.product.name} x${item.quantity}`;
+      const itemValue = `₵${(item.product.price * item.quantity).toFixed(2)}`;
+      context.fillStyle = muted;
+      context.font = '600 22px sans-serif';
+      context.fillText(itemLabel, 95, itemY, 650);
+      context.fillStyle = text;
+      context.font = '700 24px sans-serif';
+      context.fillText(itemValue, width - 220, itemY);
+      itemY += 42;
+    });
+
+    context.fillStyle = text;
+    context.font = '700 28px sans-serif';
+    context.fillText('Subtotal', 95, 1295);
+    context.fillText(`₵${subtotal.toFixed(2)}`, width - 220, 1295);
+    context.fillText('Shipping', 95, 1335);
+    context.fillText(`₵${shipping.toFixed(2)}`, width - 220, 1335);
+    context.fillText('TOTAL', 95, 1395);
+    context.fillStyle = accent;
+    context.fillText(`₵${total.toFixed(2)}`, width - 220, 1395);
+
+    const link = document.createElement('a');
+    link.download = `anisbeauty-order-${receiptOrderNumber.replace(/[^a-zA-Z0-9]/g, '-')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('Receipt downloaded successfully!');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -137,9 +277,14 @@ export default function Checkout() {
                   {typeof orderId === 'string' && orderId.startsWith('AB-') ? orderId : `AB-${orderId.slice(-8)}`}
                 </p>
               </div>
-              <Link to="/shop" className="btn-primary mt-8">
-                Continue Shopping
-              </Link>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <button type="button" onClick={handleDownloadReceipt} className="btn-secondary">
+                  Download Receipt PNG
+                </button>
+                <Link to="/shop" className="btn-primary">
+                  Continue Shopping
+                </Link>
+              </div>
             </motion.div>
           </div>
         </section>
