@@ -62,11 +62,11 @@ export default function Navbar() {
       <header
         className={`sticky top-0 z-40 transition-all duration-500 ${
           transparent
-            ? 'border-b border-white/10 bg-charcoal-900/25 backdrop-blur-md shadow-[0_8px_24px_rgba(20,16,14,0.18)]'
+            ? 'border-b border-white/10 bg-charcoal-900/28 backdrop-blur-md shadow-[0_12px_32px_rgba(20,16,14,0.22)]'
             : 'bg-white/90 backdrop-blur-md shadow-soft'
         }`}
       >
-        <nav className="container-luxe flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <nav className="container-luxe flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           {/* Mobile menu button */}
           <button
             className="lg:hidden flex-shrink-0"
@@ -88,12 +88,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <ul className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <Link
                   to={link.path}
-                  className={`font-button text-xs font-medium uppercase tracking-wider transition-colors hover:text-rosegold-500 ${
+                  className={`font-button text-[10px] font-semibold uppercase tracking-[0.22em] transition-all duration-300 hover:text-rosegold-400 ${
                     transparent ? 'text-white/90' : 'text-charcoal-600'
                   }`}
                 >
@@ -108,22 +108,22 @@ export default function Navbar() {
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search"
-              className={`transition-colors hover:text-rosegold-500 ${
-                transparent ? 'text-white' : 'text-charcoal-600'
+              className={`rounded-full p-2 transition-all hover:bg-white/10 hover:text-rosegold-400 ${
+                transparent ? 'text-white' : 'text-charcoal-600 hover:bg-charcoal-100'
               }`}
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4" />
             </button>
             <button
               onClick={openWishlist}
               aria-label="Wishlist"
-              className={`relative transition-colors hover:text-rosegold-500 ${
-                transparent ? 'text-white' : 'text-charcoal-600'
+              className={`relative rounded-full p-2 transition-all hover:bg-white/10 hover:text-rosegold-400 ${
+                transparent ? 'text-white' : 'text-charcoal-600 hover:bg-charcoal-100'
               }`}
             >
-              <Heart className="h-5 w-5" />
+              <Heart className="h-4 w-4" />
               {count > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-rosegold-500 text-[9px] font-bold text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-rosegold-500 text-[8px] font-bold text-white">
                   {count}
                 </span>
               )}
@@ -131,13 +131,13 @@ export default function Navbar() {
             <button
               onClick={openCart}
               aria-label="Cart"
-              className={`relative transition-colors hover:text-rosegold-500 ${
-                transparent ? 'text-white' : 'text-charcoal-600'
+              className={`relative rounded-full p-2 transition-all hover:bg-white/10 hover:text-rosegold-400 ${
+                transparent ? 'text-white' : 'text-charcoal-600 hover:bg-charcoal-100'
               }`}
             >
-              <ShoppingBag className="h-5 w-5" />
+              <ShoppingBag className="h-4 w-4" />
               {totalItems > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-blush-400 text-[9px] font-bold text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-blush-400 text-[8px] font-bold text-white">
                   {totalItems}
                 </span>
               )}
@@ -145,11 +145,11 @@ export default function Navbar() {
             <Link
               to="/admin"
               aria-label="Profile"
-              className={`hidden sm:block transition-colors hover:text-rosegold-500 ${
-                transparent ? 'text-white' : 'text-charcoal-600'
+              className={`hidden rounded-full p-2 sm:block transition-all hover:bg-white/10 hover:text-rosegold-400 ${
+                transparent ? 'text-white' : 'text-charcoal-600 hover:bg-charcoal-100'
               }`}
             >
-              <User className="h-5 w-5" />
+              <User className="h-4 w-4" />
             </Link>
           </div>
         </nav>
