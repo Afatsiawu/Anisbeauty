@@ -269,6 +269,14 @@ export default function AdminOrders() {
                       {selectedOrder.postal_code && `, ${selectedOrder.postal_code}`}
                       {`, ${selectedOrder.country}`}
                     </p>
+                    <p className="font-body text-sm text-charcoal-500">
+                      <span className="font-medium text-charcoal-700">Payment:</span>{' '}
+                      {selectedOrder.payment_method === 'momo'
+                        ? 'MoMo'
+                        : selectedOrder.payment_method === 'cash_on_delivery'
+                          ? 'Cash on Delivery'
+                          : 'Card'}
+                    </p>
                   </div>
                 </div>
 

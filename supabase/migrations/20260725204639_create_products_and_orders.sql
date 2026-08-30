@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS orders (
   postal_code text,
   country text DEFAULT 'United States',
   delivery_notes text,
+  payment_method text DEFAULT 'card' CHECK (payment_method IN ('card', 'momo', 'cash_on_delivery')),
   items jsonb NOT NULL,
   subtotal numeric(10,2) NOT NULL,
   shipping numeric(10,2) NOT NULL,

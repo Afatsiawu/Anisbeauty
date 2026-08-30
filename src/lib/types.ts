@@ -39,6 +39,7 @@ export interface Order {
   postal_code: string | null;
   country: string;
   delivery_notes: string | null;
+  payment_method: 'card' | 'momo' | 'cash_on_delivery';
   items: OrderItem[];
   subtotal: number;
   shipping: number;

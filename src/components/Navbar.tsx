@@ -110,6 +110,16 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+            <Link
+              to="/shop"
+              className={`hidden md:inline-flex items-center rounded-full border px-4 py-2 font-button text-[10px] uppercase tracking-wider transition-all hover:-translate-y-0.5 ${
+                transparent
+                  ? 'border-white/40 bg-white/10 text-white hover:bg-white/20'
+                  : 'border-rosegold-200 bg-rosegold-50 text-rosegold-600 hover:bg-rosegold-100'
+              }`}
+            >
+              Shop Now
+            </Link>
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search"

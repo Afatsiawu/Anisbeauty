@@ -25,10 +25,13 @@ export default function Checkout() {
     postal_code: '',
     country: 'United States',
     delivery_notes: '',
+    payment_method: 'card' as 'card' | 'momo' | 'cash_on_delivery',
     card_number: '',
     card_name: '',
     card_expiry: '',
     card_cvc: '',
+    momo_number: '',
+    momo_name: '',
   });
 
   const shipping = 8;
@@ -41,6 +44,20 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) return;
+
+    if (form.payment_method === 'card') {
+      if (!form.card_number || !form.card_name || !form.card_expiry || !form.card_cvc) {
+        showToast('Please complete your card details to continue.');
+        return;
+      }
+    }
+
+    if (form.payment_method === 'momo') {
+      if (!form.momo_number || !form.momo_name) {
+        showToast('Please provide your mobile money number and name to continue.');
+        return;
+      }
+    }
 
     setProcessing(true);
 
@@ -67,6 +84,7 @@ export default function Checkout() {
           postal_code: form.postal_code || null,
           country: form.country,
           delivery_notes: form.delivery_notes || null,
+          payment_method: form.payment_method,
           items: orderItems,
           subtotal,
           shipping,
@@ -307,71 +325,136 @@ export default function Checkout() {
                   </h2>
                 </div>
                 <p className="mt-2 font-body text-xs text-charcoal-400">
-                  Your payment information is encrypted and secure.
+                  Choose how you'd like to pay. Card details stay secure and encrypted.
                 </p>
-                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="sm:col-span-2">
-                    <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                      Card Number *
-                    </label>
-                    <div className="relative mt-1">
+
+                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  {[
+                    { value: 'card', label: 'Card' },
+                    { value: 'momo', label: 'MoMo' },
+                    { value: 'cash_on_delivery', label: 'Cash on Delivery' },
+                  ].map((option) => (
+                    <label
+                      key={option.value}
+                      className={`flex cursor-pointer items-center justify-center gap-2 rounded-luxe border px-3 py-3 font-button text-[11px] uppercase tracking-wider transition-all ${
+                        form.payment_method === option.value
+                          ? 'border-rosegold-400 bg-rosegold-50 text-rosegold-600 shadow-soft'
+                          : 'border-blush-200 bg-white text-charcoal-500 hover:border-rosegold-200'
+                      }`}
+                    >
                       <input
-                        required
-                        type="text"
-                        name="card_number"
-                        value={form.card_number}
+                        type="radio"
+                        name="payment_method"
+                        value={option.value}
+                        checked={form.payment_method === option.value}
                         onChange={handleChange}
-                        placeholder="1234 5678 9012 3456"
-                        maxLength={19}
-                        className="w-full rounded-luxe border border-blush-200 px-4 py-3 pl-11 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                        className="h-4 w-4 accent-rosegold-500"
                       />
-                      <CreditCard className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-400" />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+
+                {form.payment_method === 'card' && (
+                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        Card Number *
+                      </label>
+                      <div className="relative mt-1">
+                        <input
+                          type="text"
+                          name="card_number"
+                          value={form.card_number}
+                          onChange={handleChange}
+                          placeholder="1234 5678 9012 3456"
+                          maxLength={19}
+                          className="w-full rounded-luxe border border-blush-200 px-4 py-3 pl-11 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                        />
+                        <CreditCard className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal-400" />
+                      </div>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        Name on Card *
+                      </label>
+                      <input
+                        type="text"
+                        name="card_name"
+                        value={form.card_name}
+                        onChange={handleChange}
+                        className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        Expiry Date *
+                      </label>
+                      <input
+                        type="text"
+                        name="card_expiry"
+                        value={form.card_expiry}
+                        onChange={handleChange}
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        CVC *
+                      </label>
+                      <input
+                        type="text"
+                        name="card_cvc"
+                        value={form.card_cvc}
+                        onChange={handleChange}
+                        placeholder="123"
+                        maxLength={4}
+                        className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                      />
                     </div>
                   </div>
-                  <div className="sm:col-span-2">
-                    <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                      Name on Card *
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      name="card_name"
-                      value={form.card_name}
-                      onChange={handleChange}
-                      className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
-                    />
+                )}
+
+                {form.payment_method === 'momo' && (
+                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        Mobile Money Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="momo_number"
+                        value={form.momo_number}
+                        onChange={handleChange}
+                        placeholder="024 123 4567"
+                        className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
+                        Mobile Money Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="momo_name"
+                        value={form.momo_name}
+                        onChange={handleChange}
+                        placeholder="Enter the name on the MoMo account"
+                        className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                      Expiry Date *
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      name="card_expiry"
-                      value={form.card_expiry}
-                      onChange={handleChange}
-                      placeholder="MM/YY"
-                      maxLength={5}
-                      className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
-                    />
+                )}
+
+                {form.payment_method === 'cash_on_delivery' && (
+                  <div className="mt-4 rounded-luxe border border-dashed border-blush-200 bg-nude-50 p-4">
+                    <p className="font-body text-sm text-charcoal-600">
+                      Pay in cash when your order is delivered. Please keep your phone reachable for confirmation.
+                    </p>
                   </div>
-                  <div>
-                    <label className="font-button text-xs uppercase tracking-wider text-charcoal-500">
-                      CVC *
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      name="card_cvc"
-                      value={form.card_cvc}
-                      onChange={handleChange}
-                      placeholder="123"
-                      maxLength={4}
-                      className="mt-1 w-full rounded-luxe border border-blush-200 px-4 py-3 font-body text-sm text-charcoal-700 focus:border-rosegold-400 focus:outline-none focus:ring-2 focus:ring-rosegold-200"
-                    />
-                  </div>
-                </div>
+                )}
               </div>
             </div>
 
