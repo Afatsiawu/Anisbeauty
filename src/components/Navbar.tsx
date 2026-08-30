@@ -10,13 +10,8 @@ import type { Product } from '@/lib/types';
 const NAV_LINKS = [
   { label: 'Home', path: '/' },
   { label: 'Shop', path: '/shop' },
-  { label: 'Makeup', path: '/shop?category=Makeup' },
-  { label: 'Skincare', path: '/shop?category=Skincare' },
-  { label: 'Fragrances', path: '/shop?category=Fragrances' },
   { label: 'Collections', path: '/#collections' },
   { label: 'Best Sellers', path: '/#best-sellers' },
-  { label: 'About', path: '/#about' },
-  { label: 'Contact', path: '/#contact' },
 ];
 
 export default function Navbar() {
@@ -67,7 +62,7 @@ export default function Navbar() {
       <header
         className={`sticky top-0 z-40 transition-all duration-500 ${
           transparent
-            ? 'bg-transparent'
+            ? 'border-b border-white/10 bg-charcoal-900/25 backdrop-blur-md shadow-[0_8px_24px_rgba(20,16,14,0.18)]'
             : 'bg-white/90 backdrop-blur-md shadow-soft'
         }`}
       >
@@ -110,16 +105,6 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-            <Link
-              to="/shop"
-              className={`hidden md:inline-flex items-center rounded-full border px-4 py-2 font-button text-[10px] uppercase tracking-wider transition-all hover:-translate-y-0.5 ${
-                transparent
-                  ? 'border-white/40 bg-white/10 text-white hover:bg-white/20'
-                  : 'border-rosegold-200 bg-rosegold-50 text-rosegold-600 hover:bg-rosegold-100'
-              }`}
-            >
-              Shop Now
-            </Link>
             <button
               onClick={() => setSearchOpen(true)}
               aria-label="Search"
